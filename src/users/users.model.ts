@@ -77,17 +77,7 @@ export class User extends Model<User, UserCreationAttrs>{
     @ApiProperty({example: '8(912)345-67-89', description: 'Номер телефона'})
     @Column({ type: 'text', allowNull: false, unique: true })
     phone_number: string;
-
-    @ApiProperty({example: 'sofa_z@mail.ru', description: 'Адрес электронной почты'})
-    @Column({ type: 'text', allowNull: false, unique: true })
-    email: string;
-
-    @ApiProperty({example: 'qwe1234', description: 'Пароль'})
-    @Column({ type: 'text', allowNull: false })
-    password: string;
-
-
     
     @HasOne(() => Account)
-    timeslot: Account;
+    account: Account;
 }

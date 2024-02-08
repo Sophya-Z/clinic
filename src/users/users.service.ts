@@ -8,28 +8,20 @@ import { CreateAccountDto } from 'src/accounts/dto/create-account.dto';
 @Injectable()
 export class UsersService {
 
-    constructor(@InjectModel(User) private userRepository: typeof User) {
-
+    constructor(@InjectModel(User) private userRepository: typeof User, private accountService: AccountsService) {
+    
     }
-    private accountService: AccountsService;
+    
 
     async createUser(dto: CreateUserDto){
         const user = await this.userRepository.create(dto);
-        const newAccount = await this.accountService.createAccount({id: user.id, email: dto.email, password: dto.password, role: 'User'} as CreateAccountDto);
+        const cad = new CreateAccountDto(user.id_user, dto.email, dto.password, 'User');
+        const newAccount = await this.accountService.createAccount(cad);
         return user;
     }
 
     async getAllUsers(){
         const users = await this.userRepository.findAll();
         return users;
-    }
-
-    async findOne(email: string){
-        const user = await this.userRepository.findOne(
-            {where:
-                {email: email}
-            }
-        );
-        return user;
     }
 }

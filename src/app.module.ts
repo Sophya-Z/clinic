@@ -12,17 +12,18 @@ import { TimeSlot } from "./timeSlots/timeSlots.model";
 import { Appointment } from "./appointments/appointments.model";
 import { AdminsModule } from './admins/admins.module';
 import { AccountsService } from './accounts/accounts.service';
-import { AccountsModule } from './accounts/accounts.module';
 import { SignUpController } from './sign-up/sign-up.controller';
 import { SignUpService } from './sign-up/sign-up.service';
 import { SignUpModule } from './sign-up/sign-up.module';
 import { Account } from "./accounts/accounts.model";
+import { AccountsModule } from "./accounts/accounts.module";
 
 
 @Module({
     controllers: [SignUpController],
-    providers: [AccountsService, SignUpService],
+    providers: [SignUpService],
     imports: [
+      AccountsModule,
         ConfigModule.forRoot({
             envFilePath: `.${process.env.NODE_ENV}.env`
         }),
@@ -42,7 +43,6 @@ import { Account } from "./accounts/accounts.model";
       AuthModule,
       TimeSlotsModule,
       AdminsModule,
-      AccountsModule,
       SignUpModule,
     ]
 })

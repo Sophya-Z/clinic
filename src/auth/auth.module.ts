@@ -1,26 +1,23 @@
 import { Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { UsersModule } from '../users/users.module';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthController } from './auth.controller';
 import { jwtConstants } from './constants';
-import { UsersService } from 'src/users/users.service';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { User } from 'src/users/users.model';
-import { Admin } from 'src/admins/admins.model';
-import { Doctor } from 'src/doctors/doctors.model';
+import { Account } from 'src/accounts/accounts.model';
+import { AccountsModule } from 'src/accounts/accounts.module';
 
 @Module({
   imports: [
-    SequelizeModule.forFeature([User, Doctor, Admin]),
-    UsersModule,
+    SequelizeModule.forFeature([Account]),
+    AccountsModule,
     JwtModule.register({
       global: true,
       secret: jwtConstants.secret,
       signOptions: { expiresIn: '3600s' },
     }),
   ],
-  providers: [AuthService, UsersService],
+  providers: [AuthService],
   controllers: [AuthController],
   exports: [AuthService],
 })

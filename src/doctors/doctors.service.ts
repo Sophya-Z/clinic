@@ -24,13 +24,4 @@ export class DoctorsService {
         const doctors = await this.doctorRepository.findAll({include: TimeSlot});
         return doctors;
     }
-
-    async findOne(email: string){
-        const doctor = await this.doctorRepository.findOne(
-            {where:
-                {email: email}
-            }
-        );
-        return doctor;
-    }
 }

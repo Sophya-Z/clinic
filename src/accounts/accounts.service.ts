@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { Account } from './accounts.model';
 import { InjectModel } from '@nestjs/sequelize';
 import { CreateAccountDto } from './dto/create-account.dto';
+import { Account } from './accounts.model';
 
 @Injectable()
 export class AccountsService {
@@ -19,12 +19,12 @@ export class AccountsService {
         return accs;
     }
 
-    // async findOne(email: string){
-    //     const user = await this.accountRepository.findOne(
-    //         {where:
-    //             {email: email}
-    //         }
-    //     );
-    //     return user;
-    // }
+    async findOne(email: string){
+        const user = await this.accountRepository.findOne(
+            {where:
+                {email: email}
+            }
+        );
+        return user;
+    }
 }

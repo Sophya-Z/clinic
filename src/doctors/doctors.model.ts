@@ -43,14 +43,6 @@ export class Doctor extends Model<Doctor, DoctorCreationAttrs>{
     @Column({ type: 'text', allowNull: false, unique: true })
     phone_number: string;
 
-    @ApiProperty({example: 'doctor@mail.ru', description: 'Адрес электронной почты'})
-    @Column({ type: 'text', allowNull: false, unique: true })
-    email: string;
-
-    @ApiProperty({example: '09021990', description: 'Пароль'})
-    @Column({ type: 'text', allowNull: false })
-    password: string;
-
     @ApiProperty({example: [], description: 'График'})
     @HasMany(() => TimeSlot)
     timeslots: TimeSlot[];

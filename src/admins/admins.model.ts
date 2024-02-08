@@ -38,12 +38,4 @@ export class Admin extends Model<Admin, AdminCreationAttrs>{
     @ApiProperty({example: '8(908)765-54-32', description: 'Номер телефона'})
     @Column({ type: 'text', allowNull: false, unique: true })
     phone_number: string;
-
-    @ApiProperty({example: 'admin@mail.ru', description: 'Адрес электронной почты'})
-    @Column({ type: 'text', allowNull: false, unique: true })
-    email: string;
-
-    @ApiProperty({example: '09021990', description: 'Пароль'})
-    @Column({ type: 'text', allowNull: false })
-    password: string;
 }
