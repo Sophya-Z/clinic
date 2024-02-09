@@ -12,6 +12,7 @@ import {
   import { AuthService } from './auth.service';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { User } from 'src/users/users.model';
+import { SignInDto } from './dto/signIn.dto';
   
   @ApiTags('Аутентификация')
   @Controller('auth')
@@ -22,7 +23,7 @@ import { User } from 'src/users/users.model';
     // @ApiResponse({status: 200, type: User})
     @HttpCode(HttpStatus.OK)
     @Post('login')
-    signIn(@Body() signInDto: Record<string, any>) {
+    signIn(@Body() signInDto: SignInDto) {
       return this.authService.signIn(signInDto.email, signInDto.password);
     }
   
