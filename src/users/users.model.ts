@@ -3,6 +3,24 @@ import { Column, DataType, ForeignKey, HasOne, Model, Table, BelongsTo, HasMany 
 import { Account } from "src/accounts/accounts.model";
 import { Appointment } from "src/appointments/appointments.model";
 
+interface UserCreationAttrs {
+    surname: string,
+    user_name: string,
+    patronymic?: string,
+    birthday: Date,
+    passportSeries: number,
+    passportNumber: number,
+    passportBeenUsed: string,
+    departmentCode: number,
+    dateIssue: Date,
+    snils: string,
+    inn: number,
+    residentialAddress?: string,
+    phoneNumber: string,
+    // email: string,
+    // password: string
+}
+
 @Table
 export class User extends Model{
     @ApiProperty({example: '1', description: 'id'})

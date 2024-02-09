@@ -1,13 +1,14 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { BelongsTo, Column, DataType, ForeignKey, HasMany, Model, PrimaryKey, Table } from "sequelize-typescript";
+import { BelongsTo, BelongsToMany, Column, DataType, ForeignKey, Model, PrimaryKey, Table } from "sequelize-typescript";
+import { Role } from "src/roles/roles.model";
+import { AccountRoles } from "src/roles/account-roles.model";
 import { Doctor } from "src/doctors/doctors.model";
 import { User } from "src/users/users.model";
 
 interface AccountCreationAttrs {
     id: number,
     email: string,
-    password: string,
-    role: string;
+    password: string
 }
 
 @Table
@@ -26,6 +27,6 @@ export class Account extends Model<Account, AccountCreationAttrs>{
     password: string;
 
     @ApiProperty({example: 'Administrator', description: 'Роль пользователя'})
-    @Column({ type: 'text', allowNull: false })
-    role: string;
+    @BelongsToMany(() => Role, () => AccountRoles)
+    role: Role[];
 }
