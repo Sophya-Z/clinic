@@ -34,7 +34,7 @@ import { AccountsModule } from "./accounts/accounts.module";
         username: process.env.POSTGRES_USER,
         password: process.env.POSTGRES_PASSWORD,
         database: process.env.POSTGRES_DB,
-        models: [User, Doctor, Appointment, TimeSlot, Account],
+        models: [Account, User, Doctor, Appointment, TimeSlot],
         autoLoadModels: true
       }),
       UsersModule,
@@ -43,7 +43,7 @@ import { AccountsModule } from "./accounts/accounts.module";
       AuthModule,
       TimeSlotsModule,
       AdminsModule,
-      SignUpModule,
+      SignUpModule
     ]
 })
 export class AppModule{}

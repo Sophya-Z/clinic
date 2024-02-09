@@ -5,7 +5,7 @@ import { Account } from './accounts.model';
 import { SequelizeModule } from '@nestjs/sequelize';
 
 @Module({
-  controllers: [AccountsController],
+  // controllers: [AccountsController],
   providers: [AccountsService],
   imports: [
     SequelizeModule.forFeature([Account])

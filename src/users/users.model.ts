@@ -1,30 +1,13 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { Column, DataType, HasOne, Model, Table } from "sequelize-typescript";
+import { Column, DataType, ForeignKey, HasOne, Model, Table, BelongsTo, HasMany } from "sequelize-typescript";
 import { Account } from "src/accounts/accounts.model";
-
-interface UserCreationAttrs {
-    surname: string,
-    user_name: string,
-    patronymic?: string,
-    birthday: Date,
-    passportSeries: number,
-    passportNumber: number,
-    passportBeenUsed: string,
-    departmentCode: number,
-    dateIssue: Date,
-    snils: string,
-    inn: number,
-    residentialAddress?: string,
-    phoneNumber: string,
-    email: string,
-    password: string
-}
+import { Appointment } from "src/appointments/appointments.model";
 
 @Table
-export class User extends Model<User, UserCreationAttrs>{
+export class User extends Model{
     @ApiProperty({example: '1', description: 'id'})
     @Column({ type: DataType.INTEGER, unique: true, autoIncrement: true, primaryKey: true})
-    id_user: number;
+    id: number;
 
     @ApiProperty({example: 'Захарчук', description: 'Фамилия'})
     @Column({ type: 'text', allowNull: false })
@@ -32,7 +15,7 @@ export class User extends Model<User, UserCreationAttrs>{
 
     @ApiProperty({example: 'Софья', description: 'Имя'})
     @Column({ type: 'text', allowNull: false })
-    user_name: string;
+    name: string;
 
     @ApiProperty({example: 'Игоревна', description: 'Отчество'})
     @Column({ type: 'text', allowNull: true })
@@ -44,23 +27,23 @@ export class User extends Model<User, UserCreationAttrs>{
 
     @ApiProperty({example: '1234', description: 'Серия паспорта'})
     @Column({ type: 'integer', allowNull: false })
-    passport_series: number;
+    passportSeries: number;
 
     @ApiProperty({example: '456789', description: 'Номер паспорта'})
     @Column({ type: 'integer', allowNull: false })
-    passport_number: number;
+    passportNumber: number;
 
     @ApiProperty({example: 'Отделом УФМС Росси по Саратовской области', description: 'Паспорт выдан'})
     @Column({ type: 'text', allowNull: false })
-    passport_been_used: string;
+    passportBeenUsed: string;
 
     @ApiProperty({example: '123', description: 'Код организации'})
     @Column({ type: 'integer', allowNull: false })
-    department_code: number;
+    departmentCode: number;
 
     @ApiProperty({example: '10.10.2020', description: 'Дата выдачи'})
     @Column({ type: 'date', allowNull: false })
-    date_issue: Date;
+    dateIssue: Date;
 
     @ApiProperty({example: '123-456-789 12', description: 'СНИЛС'})
     @Column({ type: 'text', allowNull: false, unique: true })
@@ -72,12 +55,19 @@ export class User extends Model<User, UserCreationAttrs>{
 
     @ApiProperty({example: 'г. Энгельс, ул. Колотилова, д. 155, кв. 82', description: 'Адрес проживания'})
     @Column({ type: 'text', allowNull: true })
-    residential_address: string;
+    residentialAddress: string;
 
     @ApiProperty({example: '8(912)345-67-89', description: 'Номер телефона'})
     @Column({ type: 'text', allowNull: false, unique: true })
-    phone_number: string;
-    
-    @HasOne(() => Account)
+    phoneNumber: string;
+
+    @BelongsTo(() => Account)
     account: Account;
+
+    @Column({ type: DataType.INTEGER, allowNull: false, unique: true })
+    @ForeignKey(() => Account)
+    accountId: number;
+
+    @HasMany(() => Appointment)
+    appointments: Appointment[];
 }

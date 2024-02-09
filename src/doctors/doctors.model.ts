@@ -1,5 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { Column, DataType, HasMany, Model, Table } from "sequelize-typescript";
+import { Column, DataType, HasMany, Model, Table, BelongsTo, ForeignKey } from "sequelize-typescript";
+import { Account } from "src/accounts/accounts.model";
+import { Appointment } from "src/appointments/appointments.model";
 import { TimeSlot } from "src/timeSlots/timeSlots.model";
 
 interface DoctorCreationAttrs {
@@ -10,14 +12,15 @@ interface DoctorCreationAttrs {
     description: string,
     phoneNumber: string,
     email: string,
-    password: string
+    password: string,
+    account: Account
 }
 
 @Table
-export class Doctor extends Model<Doctor, DoctorCreationAttrs>{
+export class Doctor extends Model{
     @ApiProperty({example: '1', description: 'id'})
     @Column({ type: DataType.INTEGER, unique: true, autoIncrement: true, primaryKey: true})
-    id_doctor: number;
+    id: number;
 
     @ApiProperty({example: 'Иванов', description: 'Фамилия'})
     @Column({ type: 'text', allowNull: false })
@@ -25,7 +28,7 @@ export class Doctor extends Model<Doctor, DoctorCreationAttrs>{
 
     @ApiProperty({example: 'Иван', description: 'Имя'})
     @Column({ type: 'text', allowNull: false })
-    doctor_name: string;
+    name: string;
 
     @ApiProperty({example: 'Иванович', description: 'Отчество'})
     @Column({ type: 'text', allowNull: true })
@@ -41,9 +44,19 @@ export class Doctor extends Model<Doctor, DoctorCreationAttrs>{
 
     @ApiProperty({example: '8(908)765-54-32', description: 'Номер телефона'})
     @Column({ type: 'text', allowNull: false, unique: true })
-    phone_number: string;
+    phone: string;
 
     @ApiProperty({example: [], description: 'График'})
     @HasMany(() => TimeSlot)
-    timeslots: TimeSlot[];
+    timeSlots: TimeSlot[];
+
+    @BelongsTo(() => Account)
+    account: Account;
+
+    @Column({ type: DataType.INTEGER, allowNull: true, unique: true })
+    @ForeignKey(() => Account)
+    accountId: number;
+
+    @HasMany(() => Appointment)
+    appointments: Appointment[];
 }
