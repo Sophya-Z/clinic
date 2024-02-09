@@ -8,7 +8,7 @@ import { AccountRoles } from 'src/roles/account-roles.model';
 import { RoleModule } from 'src/roles/roles.module';
 
 @Module({
-  controllers: [AccountsController],
+  // controllers: [AccountsController],
   providers: [AccountsService],
   imports: [
     SequelizeModule.forFeature([Account, Role, AccountRoles]),

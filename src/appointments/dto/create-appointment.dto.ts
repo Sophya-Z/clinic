@@ -1,5 +1,5 @@
 export class CreateAppointmentDto {
-    readonly day: Date;
-    readonly time: string;
-    readonly id_doctor: number;
+    readonly date: Date;
+    readonly doctorId: number;
+    readonly userId: number;
 }

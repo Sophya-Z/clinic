@@ -1,4 +1,6 @@
-import { Column, DataType, Model, Table } from "sequelize-typescript";
+import { BelongsTo, Column, DataType, ForeignKey, Model, Table, Unique } from "sequelize-typescript";
+import { Doctor } from "src/doctors/doctors.model";
+import { User } from "src/users/users.model";
 
 interface AppointmentCreationAttrs {
     day: Date,
@@ -9,23 +11,29 @@ interface AppointmentCreationAttrs {
 @Table
 export class Appointment extends Model<Appointment, AppointmentCreationAttrs>{
     @Column({ type: DataType.INTEGER, unique: true, autoIncrement: true, primaryKey: true})
-    id_appointment: number;
+    id: number;
 
-    @Column({ type: 'date', allowNull: false })
-    day: Date;
+    @BelongsTo(() => Doctor)
+    doctor: Doctor;
 
-    @Column({ type: 'text', allowNull: false })
-    time: string;
+    @ForeignKey(() => Doctor)
+    @Unique('doctor-date')
+    @Column({ type: DataType.INTEGER, allowNull: true})
+    doctorId: number;
 
-    @Column({ type: 'integer', allowNull: true })
-    id_doctor: number;
+    @Unique('doctor-date')
+    @Column({ type: DataType.DATE, allowNull: false })
+    date: Date;
+    
+    @Column({ type: "text", allowNull: true })
+    data: string
+    
+    @BelongsTo(() => User)
+    user: User;
+    
+    @Column({ type: DataType.INTEGER, allowNull: true})
+    @ForeignKey(() => User)
+    userId: number;
 
-    @Column({ type: 'integer', allowNull: false })
-    id_user: number;
 
-    @Column({ type: 'text', allowNull: false })
-    appointment_data: string;
-
-    @Column({ type: 'boolean', allowNull: false })
-    status: boolean;
 }

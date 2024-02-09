@@ -7,7 +7,7 @@ async function start() {
     const app = await NestFactory.create(AppModule);
 
     const config = new DocumentBuilder()
-        .setTitle('Кругозор')
+        .setTitle('Клиника')
         .setDescription('Документация REST API')
         .setVersion('1.0.0')
         .addTag('App')
