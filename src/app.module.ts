@@ -17,6 +17,10 @@ import { SignUpService } from './sign-up/sign-up.service';
 import { SignUpModule } from './sign-up/sign-up.module';
 import { Account } from "./accounts/accounts.model";
 import { AccountsModule } from "./accounts/accounts.module";
+import { RoleModule } from './roles/roles.module';
+import { Role } from "./roles/roles.model";
+import { AccountRoles } from "./roles/account-roles.model";
+import { Admin } from "./admins/admins.model";
 
 
 @Module({
@@ -34,7 +38,7 @@ import { AccountsModule } from "./accounts/accounts.module";
         username: process.env.POSTGRES_USER,
         password: process.env.POSTGRES_PASSWORD,
         database: process.env.POSTGRES_DB,
-        models: [User, Doctor, Appointment, TimeSlot, Account],
+        models: [User, Doctor, Appointment, TimeSlot, Admin, Account, Role, AccountRoles],
         autoLoadModels: true
       }),
       UsersModule,
@@ -44,6 +48,7 @@ import { AccountsModule } from "./accounts/accounts.module";
       TimeSlotsModule,
       AdminsModule,
       SignUpModule,
+      RoleModule,
     ]
 })
 export class AppModule{}

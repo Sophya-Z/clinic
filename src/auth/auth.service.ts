@@ -6,8 +6,6 @@ import { AccountsService } from 'src/accounts/accounts.service';
 export class AuthService {
   constructor(
     private accountsService: AccountsService,
-    // private doctorsService: DoctorsService,
-    // private adminsService: AdminsService,
     private jwtService: JwtService
   ) {}
 

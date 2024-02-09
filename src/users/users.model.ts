@@ -16,8 +16,8 @@ interface UserCreationAttrs {
     inn: number,
     residentialAddress?: string,
     phoneNumber: string,
-    email: string,
-    password: string
+    // email: string,
+    // password: string
 }
 
 @Table

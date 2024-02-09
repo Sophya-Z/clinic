@@ -10,14 +10,14 @@ export class AccountsController {
     // @ApiOperation({summary: 'Создание акккаунта'})
     // @ApiResponse({status: 200, type: Account})
     @Post()
-    createAcc(@Body() accountDto: CreateAccountDto){
-        return this.accountsService.createAccount(accountDto);
+    createAcc(@Body() accountDto: CreateAccountDto, role: string){
+        return this.accountsService.createAccount(accountDto, role);
     }
 
     // @ApiOperation({summary: 'Получение всех пользователей'})
     // @ApiResponse({status: 200, type: [Account]})
     @Get()
     getAcc(){
-        return this.accountsService.getAccount();
+        return this.accountsService.getAllAccounts();
     }
 }

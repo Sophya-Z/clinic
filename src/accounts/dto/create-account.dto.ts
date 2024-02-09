@@ -7,12 +7,9 @@ export class CreateAccountDto {
     readonly email: string;
     @ApiProperty({example: '09021990', description: 'Пароль'})
     readonly password: string;
-    @ApiProperty({example: 'Administrator', description: 'Роль пользователя'})
-    readonly role: string;
-    constructor(id: number, email: string, password: string, role: string){
+    constructor(id: number, email: string, password: string){
         this.id = id;
         this.email = email;
         this.password = password;
-        this.role = role;
     }
 }
