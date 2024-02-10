@@ -6,6 +6,7 @@ import { jwtConstants } from './constants';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { Account } from 'src/accounts/accounts.model';
 import { AccountsModule } from 'src/accounts/accounts.module';
+import { AccountsService } from 'src/accounts/accounts.service';
 
 @Module({
   imports: [
@@ -18,7 +19,7 @@ import { AccountsModule } from 'src/accounts/accounts.module';
       signOptions: { expiresIn: '3600s' },
     }),
   ],
-  providers: [AuthService],
+  providers: [AuthService, AccountsService],
   controllers: [AuthController],
   exports: [AuthService],
 })

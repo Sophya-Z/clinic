@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { CreateAccountDto } from './dto/create-account.dto';
 import { Account } from './accounts.model';
+import { User } from 'src/users/users.model';
 @Injectable()
 export class AccountsService {
     constructor(@InjectModel(Account) private accountRepository: typeof Account) {
@@ -18,6 +19,13 @@ export class AccountsService {
             {where:
                 {email: email}
             }
+        );
+        return user;
+    }
+
+    async findById(id: number){
+        const user = await this.accountRepository.findByPk(
+            id, {include: [User]}
         );
         return user;
     }
