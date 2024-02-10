@@ -6,6 +6,8 @@ import { TimeSlot } from 'src/timeSlots/timeSlots.model';
 import { TimeSlotDto } from './dto/addTimeSlots.dto';
 import { Account } from 'src/accounts/accounts.model';
 import { Appointment } from 'src/appointments/appointments.model';
+import { Role } from 'src/roles/role.enum';
+import moment from 'moment';
 
  @Injectable()
 export class DoctorsService {
@@ -13,8 +15,16 @@ export class DoctorsService {
 
     async createDoctor(dto: CreateDoctorDto){
         const doctor = await this.doctorRepository.create(
-            {...dto, account: {email: dto.email, password: dto.password, role: "doctor"}},
+            {...dto, account: {email: dto.email, password: dto.password, role: Role.Doctor}},
             {include: [Account]}
+        );
+        return doctor;
+    }
+
+    async getById(id: number){
+        const doctor = await this.doctorRepository.findByPk(
+            id,
+            // {include: [Account, Appointment]}
         );
         return doctor;
     }
@@ -36,18 +46,21 @@ export class DoctorsService {
 
         let timeSlots = this.getTimesMap(doctor.timeSlots)
 
-        const availableDateTimes = [];
+        const availableDateTimes = {};
 
         for (let currentDate = new Date(startDate); currentDate <= endDate; currentDate = addDays(currentDate, 1)) {
             let times = timeSlots[currentDate.getDay()]
             if (!times) {
                 continue;
             }
-            console.log(times)
             for (let time of times) {
                 let date = addTime(new Date(currentDate), time)
                 if (this.isFreeDate(date, doctor.appointments)) {
-                    availableDateTimes.push(date);
+                    const [day, time] = date.toISOString().split('T');
+                    if (!availableDateTimes[day]) {
+                        availableDateTimes[day] = [];
+                      }
+                      availableDateTimes[day].push(time.split('.')[0]);
                 }
             }
         }
@@ -75,10 +88,11 @@ export class DoctorsService {
         if (!times) {
             return false
         }
+
+        let d = date.getHours() * 60 * 60 * 1000 + date.getMinutes() * 60 * 1000 + date.getSeconds() * 1000 + date.getMilliseconds()
+
         for (let time of times) {
-            let d = new Date(date.getTime() - (date.getTime() % 86400000))
-            console.log(d)
-            if (d.getTime() + time === date.getTime()) {
+            if (d === time) {
                 return true
             }
         }

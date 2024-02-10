@@ -8,13 +8,6 @@ import { AuthGuard } from 'src/auth/auth.guard';
 export class AccountsController {
     constructor(private accountsService: AccountsService){}
 
-    // @ApiOperation({summary: 'Создание акккаунта'})
-    // @ApiResponse({status: 200, type: Account})
-    @Post()
-    createAcc(@Body() accountDto: CreateAccountDto, role: string){
-        return this.accountsService.createAccount(accountDto, role);
-    }
-
     // @ApiOperation({summary: 'Получение всех пользователей'})
     // @ApiResponse({status: 200, type: [Account]})
     @UseGuards(AuthGuard)

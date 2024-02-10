@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/sequelize';
 import { User } from './users.model';
 import { CreateUserDto } from './dto/create-user.dto';
 import { Account } from 'src/accounts/accounts.model';
+import { Role } from 'src/roles/role.enum';
 
 @Injectable()
 export class UsersService {
@@ -10,7 +11,7 @@ export class UsersService {
 
     async createUser(dto: CreateUserDto){
         const user = await this.userRepository.create(
-            {...dto, account: {email: dto.email, password: dto.password, role: "user"}},
+            {...dto, account: {email: dto.email, password: dto.password, role: Role.User}},
             {include: [Account]}
         );
         return user;

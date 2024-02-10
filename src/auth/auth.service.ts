@@ -13,14 +13,11 @@ export class AuthService {
     email: string,
     pass: string,
   ): Promise<{ access_token: string }> {
-    console.log(email, pass);
-    const user = await this.accountsService.findOne(email);
-    console.log(email, pass);
-    if (user?.password !== pass) {
+    const account = await this.accountsService.findOne(email);
+    if (account?.password !== pass) {
       throw new UnauthorizedException();
     }
-    const payload = { id: user.id, email: user.email };
-    console.log(email, pass);
+    const payload = { id: account.id, email: account.email, role: account.role };
     
     return {
       access_token: await this.jwtService.signAsync(payload),
